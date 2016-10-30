@@ -4,11 +4,7 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var QuestionSchema = new mongoose.Schema({
   question: String,
   answer: String,
-  answerID: Number,
-  meta: {
-  	right: Number,
-  	wrong: Number
-  }
+  answerID: Number
 });
 
 QuestionSchema.plugin(passportLocalMongoose);

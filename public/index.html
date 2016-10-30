@@ -40,24 +40,11 @@
     }
   </style>
 </head>
-
-<div class="ui top attached tabular menu">
-    <a href="index.html" class="active item">
-        Home
-    </a>
-    <a href="#" class="item">
-        Questions
-    </a>
-    <a href="/index" class="item">
-        Answers
-    </a>
-</div>
-
 <body>
 
-<div class="ui middle aligned center aligned grid">
+<div class="ui four column doubling stackable grid container">
   <div class="column">
-    <h2 class="ui teal image header">
+    <h2 class="ui center aligned teal image header">
       <div class="content">
         Create A Trivia Question And Store It To ur Database
       </div>
@@ -69,19 +56,22 @@
       <div class="ui stacked segment">
         <div class="field">
           <div class="ui left icon input">
-            <i class="user icon"></i>
+            <i class="rebel icon"></i>
             <input type="text" name="questionInput" id="questionInput" placeholder="New Question...">
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
-            <i class="lock icon"></i>
+            <i class="empire icon"></i>
             <input type="text" name="answerInput" id="answerInput" placeholder="Answer to question...">
           </div>
         </div>
-       <button id="addQuestionToDatabase" >Submit</input>
+       <button class="ui fluid primary button"id="addQuestionToDatabase" >Submit Question And Answer</input>
       </div>
-      <h2 class="ui teal image header">
+    </div>
+  </div>
+  <div class="column">
+    <h2 class="ui center aligned teal image header">
       <div class="content">
         Return a Question and It's ID
       </div>
@@ -89,10 +79,14 @@
       <section id="answer_Two">
         <p class="result_Two"></p>
       </section>
-      <div class="ui stacked segment">
-       <button id="getQuestionFromDatabase" >Submit</input>
+      <div class="ui large form">
+        <div class="ui stacked segment">
+         <button class="ui fluid primary button" id="getQuestionFromDatabase" >Get Question</input>
+        </div>
       </div>
-      <h2 class="ui teal image header">
+  </div>
+  <div class="column">
+    <h2 class="ui center aligned teal image header">
       <div class="content">
         Check Your Answer To A Question Via ID
       </div>
@@ -100,24 +94,41 @@
       <section id="answer_Three">
         <p class="result_Three"></p>
       </section>
-      <div class="ui stacked segment">
-        <div class="field">
-          <div class="ui left icon input">
-            <i class="user icon"></i>
-            <input type="text" name="idInput" id="idInput" placeholder="Question ID...">
+      <div class="ui large form">
+        <div class="ui stacked segment">
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="pied piper hat icon"></i>
+              <input type="text" name="idInput" id="idInput" placeholder="Question ID...">
+            </div>
           </div>
-        </div>
-        <div class="field">
-          <div class="ui left icon input">
-            <i class="lock icon"></i>
-            <input type="text" name="answerInputTwo" id="answerInputTwo" placeholder="Answer to question...">
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="pied piper alternate icon"></i>
+              <input type="text" name="answerInputTwo" id="answerInputTwo" placeholder="Answer to question...">
+            </div>
           </div>
+         <button class="ui fluid primary button" id="checkAnswerToQuestionInDatabase" >Check Answer</input>
         </div>
-       <button id="checkAnswerToQuestionInDatabase" >Submit</input>
       </div>
-    </div>
+  </div>
+  <div class="column">
+    <h2 class="ui center aligned teal image header">
+      <div class="content">
+        Pull The Score From The Database
+      </div>
+      </h2>
+      <section id="answer_Four">
+        <p class="result_Four"></p>
+      </section>
+      <div class="ui large form">
+        <div class="ui stacked segment">
+         <button class="ui fluid primary button" id="getScoreFromDatabase" >Get Score</input>
+        </div>
+      </div>
   </div>
 </div>
+
 </body>
 <footer>
 <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>

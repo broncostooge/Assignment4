@@ -24,7 +24,7 @@ var main = function() {
 	$('#getQuestionFromDatabase').on('click', function (event) {
 			
 		$.get('question', function(res){	
-			$('#answer_Two .result_Two').text('Question: ' + res.Question + " ID: " + res.answerID);
+			$('#answer_Two .result_Two').text('Question: ' + res.Question + " ID: " + res._id);
 		});
 		return false;
 	});
@@ -47,6 +47,13 @@ var main = function() {
 		return false;
 	});
 
+	$('#getScoreFromDatabase').on('click', function (event) {
+			
+		$.get('score', function(res){	
+			$('#answer_Four .result_Four').text('Right: ' + res.right + " Wrong: " + res.wrong);
+		});
+		return false;
+	});
 };
 
 $(document).ready(main);
