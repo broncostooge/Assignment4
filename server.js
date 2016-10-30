@@ -24,37 +24,37 @@ app.use(express.static(__dirname + '/public'));
 http.createServer(app).listen(3000);
 console.log('Running on port http://localhost:3000/');
 
-// mongoose.Promise = global.Promise;
-// // Support JSON-encoded bodies
-// app.use(bodyParser.json());
-// // Support URL-encoded bodies
-// app.use(bodyParser.urlencoded({
-//     extended: true
-// }));
+mongoose.Promise = global.Promise;
+// Support JSON-encoded bodies
+app.use(bodyParser.json());
+// Support URL-encoded bodies
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
-// Connect to the database
-// mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost:27017/test');
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function() {
-//     console.log("Connected to Database");
-// });
+Connect to the database
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log("Connected to Database");
+});
 
-// client.incr('correct_ID', function(err, ID) {
-//     var collection = db.collection('correct');
-//     var input = {
-//         "right": 0,
-//         "wrong": 0,
-//         "_id": ID
-//     }
+client.incr('correct_ID', function(err, ID) {
+    var collection = db.collection('correct');
+    var input = {
+        "right": 0,
+        "wrong": 0,
+        "_id": ID
+    }
 
-//     collection.insert([input], function(err, result) {
-//         if(err){
-//             console.log(err);
-//         }
-//     })
-// });
+    collection.insert([input], function(err, result) {
+        if(err){
+            console.log(err);
+        }
+    })
+});
 
 // Home Page
 app.get('/', function(req, res) {
