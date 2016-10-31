@@ -11,7 +11,7 @@ client = redis.createClient();
 
 client.on('connect', function() {
     console.log('connected');
-})
+});
 
 client.set('question_ID', 0, function(){});
 client.set('correct_ID', 0, function(){});
@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-Connect to the database
+//Connect to the database
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/test');
 var db = mongoose.connection;
@@ -47,13 +47,13 @@ client.incr('correct_ID', function(err, ID) {
         "right": 0,
         "wrong": 0,
         "_id": ID
-    }
+    };
 
     collection.insert([input], function(err, result) {
         if(err){
             console.log(err);
         }
-    })
+    });
 });
 
 // Home Page
@@ -79,7 +79,7 @@ app.post('/question', function(req, res) {
             else{
                 res.json({'Question': input.Question, 'Answer': input.Answer});
             }
-        })
+        });
     });
 });
 
@@ -96,22 +96,29 @@ app.post('/answer', function(req, res) {
 
     var collection = db.collection('questions');
     var cursor = collection.find();
-    cursor.forEach(function(Question) {
+    console.log(cursor[0]);
+    if(curser.length == 0){
+        console.log('hi');
+        res.json({"correct": "Database is empty."});
+    }
+    else{
+        cursor.forEach(function(Question) {
         if(Question._id == req.body.ID && Question.Answer == req.body.Answer) {
             client.incr('right', function(err,result) {
-                var correct = db.collection('correct');
-                correct.update({_id: 1 },{ $set: { right: result } });
-            });
-            res.json({"correct": "true"});
-        }
-        else{
-            client.incr('wrong', function(err,result) {
-                var correct = db.collection('correct');
-                correct.update({_id: 1 },{ $set: { wrong: result } });
-            });
-            res.json({"correct": "false"});
-        }
-    });
+                    var correct = db.collection('correct');
+                    correct.update({_id: 1 },{ $set: { right: result } });
+                });
+                res.json({"correct": "true"});
+            }
+            else{
+                client.incr('wrong', function(err,result) {
+                    var correct = db.collection('correct');
+                    correct.update({_id: 1 },{ $set: { wrong: result } });
+                });
+                res.json({"correct": "false"});
+            }
+        });
+    }
 });
 
 app.get('/score', function(req, res) {
