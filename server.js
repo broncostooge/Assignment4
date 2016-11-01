@@ -39,7 +39,6 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log("Connected to Database");
-    db.dropDatabase();
 });
 
 client.incr('correct_ID', function(err, ID) {
@@ -97,29 +96,22 @@ app.post('/answer', function(req, res) {
 
     var collection = db.collection('questions');
     var cursor = collection.find();
-    console.log(cursor[0]);
-    if(curser.length == 0){
-        console.log('hi');
-        res.json({"correct": "Database is empty."});
-    }
-    else{
-        cursor.forEach(function(Question) {
+    cursor.forEach(function(Question) {
         if(Question._id == req.body.ID && Question.Answer == req.body.Answer) {
             client.incr('right', function(err,result) {
-                    var correct = db.collection('correct');
-                    correct.update({_id: 1 },{ $set: { right: result } });
-                });
-                res.json({"correct": "true"});
-            }
-            else{
-                client.incr('wrong', function(err,result) {
-                    var correct = db.collection('correct');
-                    correct.update({_id: 1 },{ $set: { wrong: result } });
-                });
-                res.json({"correct": "false"});
-            }
-        });
-    }
+                var correct = db.collection('correct');
+                correct.update({_id: 1 },{ $set: { right: result } });
+            });
+            res.json({"correct": "true"});
+        }
+        else{
+            client.incr('wrong', function(err,result) {
+                var correct = db.collection('correct');
+                correct.update({_id: 1 },{ $set: { wrong: result } });
+            });
+            res.json({"correct": "false"});
+        }
+    });
 });
 
 app.get('/score', function(req, res) {
