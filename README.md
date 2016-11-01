@@ -8,7 +8,7 @@ up the the db then run mongo in a new terminal.
 
 3. Start up Redis with redis-server.
 
-4. Run npm start to start to start server.
+4. Run npm start to start server.
 
 5. Open browser and type localhost:3000
 
