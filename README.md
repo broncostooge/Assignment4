@@ -12,6 +12,6 @@ up the the db then run mongo in a new terminal.
 
 5. Open browser and type localhost:3000
 
-OR
+  OR
 
-Right click http://localhost:3000/
+  Right click http://localhost:3000/
