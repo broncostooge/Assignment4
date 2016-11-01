@@ -79,17 +79,14 @@ app.get('/question', function(req, res) {
 app.post('/answer', function(req, res) {
 
     var collection = db.collection('questions');
-    var cursor = collection.find({_id: req.body.ID});
-    console.log(cursor);
+    var cursor = collection.find();
     cursor.forEach(function(Question) {
-        console.log(Question);
         if(Question._id == req.body.ID && Question.Answer == req.body.Answer) {
             client.incr('right', function(err,result) {});
             res.json({"correct": "true"});
         }
         else{
             client.incr('wrong', function(err,result) {});
-            console.log('second branch');
             //res.json({"correct": "false"});
         } 
     });
