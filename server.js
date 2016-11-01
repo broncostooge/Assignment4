@@ -79,17 +79,34 @@ app.get('/question', function(req, res) {
 app.post('/answer', function(req, res) {
 
     var collection = db.collection('questions');
-    var cursor = collection.find();
-    cursor.forEach(function(Question) {
-        if(Question._id == req.body.ID && Question.Answer == req.body.Answer) {
-            client.incr('right', function(err,result) {});
-            res.json({"correct": "true"});
+    collection.find().toArray(function(err, questions) {
+        var index = 0;
+        var found = 0;
+        while(index < questions.length && found != -1){
+             if(questions[index]._id == req.body.ID && questions[index].Answer == req.body.Answer) {
+                client.incr('right', function(err,result) {});
+                res.json({"correct": "true"});
+                found = -1;
+            }
+            index += 1;
         }
-        else{
+
+        if(found == 0)
+        {
             client.incr('wrong', function(err,result) {});
-            //res.json({"correct": "false"});
-        } 
+            res.json({"correct": "false"});
+        }
     });
+    // cursor.forEach(function(Question) {
+    //     if(Question._id == req.body.ID && Question.Answer == req.body.Answer) {
+    //         client.incr('right', function(err,result) {});
+    //         res.json({"correct": "true"});
+    //     }
+    //     else{
+    //         client.incr('wrong', function(err,result) {});
+    //         //res.json({"correct": "false"});
+    //     } 
+    // });
 });
 
 app.get('/score', function(req, res) {
