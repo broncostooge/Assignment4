@@ -13,10 +13,9 @@ client.on('connect', function() {
     console.log('connected');
 });
 
-client.set('question_ID', 0, function(){});
-client.set('correct_ID', 0, function(){});
-client.set('right', 0, function(){});
-client.set('wrong', 0, function(){});
+client.set('question_ID', 0);
+client.set('right', 0);
+client.set('wrong', 0);
 
 app.use(express.static(__dirname + '/public'));
 
@@ -39,21 +38,6 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log("Connected to Database");
-});
-
-client.incr('correct_ID', function(err, ID) {
-    var collection = db.collection('correct');
-    var input = {
-        "right": 0,
-        "wrong": 0,
-        "_id": ID
-    };
-
-    collection.insert([input], function(err, result) {
-        if(err){
-            console.log(err);
-        }
-    });
 });
 
 // Home Page
@@ -95,30 +79,29 @@ app.get('/question', function(req, res) {
 app.post('/answer', function(req, res) {
 
     var collection = db.collection('questions');
-    var cursor = collection.find();
+    var cursor = collection.find({_id: req.body.ID});
+    console.log(cursor);
     cursor.forEach(function(Question) {
+        console.log(Question);
         if(Question._id == req.body.ID && Question.Answer == req.body.Answer) {
-            client.incr('right', function(err,result) {
-                var correct = db.collection('correct');
-                correct.update({_id: 1 },{ $set: { right: result } });
-            });
+            client.incr('right', function(err,result) {});
             res.json({"correct": "true"});
         }
         else{
-            client.incr('wrong', function(err,result) {
-                var correct = db.collection('correct');
-                correct.update({_id: 1 },{ $set: { wrong: result } });
-            });
-            res.json({"correct": "false"});
-        }
+            client.incr('wrong', function(err,result) {});
+            console.log('second branch');
+            //res.json({"correct": "false"});
+        } 
     });
 });
 
 app.get('/score', function(req, res) {
-    var collection = db.collection('correct');
-    collection.find().toArray(function(err, questions) {
-        res.send(questions[0]);
+    client.get('right', function(err, right) {
+        client.get('wrong', function(err, wrong) {
+            res.json({"right": right,
+                      "wrong": wrong
+                  })
+        });
     });
-
 });
 

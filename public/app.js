@@ -9,13 +9,18 @@ var main = function() {
 			var question = $('#questionInput').val();
 			var answer = $('#answerInput').val();
 
-			var input = {
-				"Question": question,
-				"Answer": answer
-			};
-			
-			$.post('question', input, function(res){	
+			$.ajax({
+			  type: "POST",
+			  url: 'question',
+			  data: JSON.stringify({
+			  	"Question": question,
+			  	"Answer": answer
+			  }),
+			  success: function(res){	
 				$('#answer .result').text('Question: ' + res.Question + " Answer: " + res.Answer);
+				},
+				contentType: "application/json",
+    			dataType: 'json'
 			});
 		}
 		return false;
@@ -39,14 +44,19 @@ var main = function() {
 		if($('#idInput').val() !== '') {
 			var ID = $('#idInput').val();
 			var answer = $('#answerInputTwo').val();
-
-			var input = {
-				"ID": ID,
-				"Answer": answer
-			};
 			
-			$.post('answer', input, function(res){	
+			$.ajax({
+			  type: "POST",
+			  url: 'answer',
+			  data: JSON.stringify({
+			  	"ID": ID,
+			  	"Answer": answer
+			  	}),
+			  success: function(res){	
 				$('#answer_Three .result_Three').text('Correct: ' + res.correct);
+				},
+			  contentType: "application/json",
+    		  dataType: 'json'
 			});
 		}
 		return false;
