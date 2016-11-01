@@ -1,13 +1,17 @@
 # Assignment4
 
-Run nmp install to install the dependencies
+1. Run npm install to install the dependencies
+if node_modules are not included.
 
-Start Mongo DB by typing mongo
+2. Start up Mongo DB, use mongod to start
+up the the db then run mongo in a new terminal.
 
-Run nmp start to start to start server
+3. Start up Redis with redis-server.
 
-Open browser and type localhost:3000
+4. Run npm start to start to start server.
 
-OR
+5. Open browser and type localhost:3000
 
-Right click http://localhost:3000/
+  OR
+
+  Right click http://localhost:3000/
