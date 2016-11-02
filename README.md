@@ -14,4 +14,4 @@ up the the db then run mongo in a new terminal.
 
   OR
 
-  Right click http://localhost:3000/
+  Right click http://localhost:3000/ in the console that you type npm start int
